@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const MainLayout = ({ children }) => {
   return (
@@ -7,16 +8,10 @@ const MainLayout = ({ children }) => {
       <header className="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
         <h1 className="text-xl font-semibold text-blue-600">Epress Media</h1>
         <nav className="space-x-4">
-          <a href="#" className="text-gray-700 hover:text-blue-600">
-            Home
-          </a>
-          <a href="#" className="text-gray-700 hover:text-blue-600">
-            About
-          </a>
-          <a href="#" className="text-gray-700 hover:text-blue-600">
-            Contact
-          </a>
-        </nav>
+  <Link to="/" className="text-gray-700 hover:text-blue-600">Home</Link>
+  <Link to="/about" className="text-gray-700 hover:text-blue-600">About</Link>
+  <Link to="/contact" className="text-gray-700 hover:text-blue-600">Contact</Link>
+</nav>
       </header>
 
       {/* Main content */}
