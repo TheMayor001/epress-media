@@ -1,98 +1,94 @@
-// src/pages/Register.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({ email: "", password: "", role: "editor" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
-      const userCred = await createUserWithEmailAndPassword(
+      // Step 1: Create user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
-        form.email,
-        form.password
+        email,
+        password
       );
+      const user = userCredential.user;
 
-      // Save user role in Firestore
-      await setDoc(doc(db, "users", userCred.user.uid), {
-        email: form.email,
-        role: form.role,
-        createdAt: new Date(),
+      // Step 2: Store user role in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        email: user.email,
+        role: "reader", // default role
+        createdAt: serverTimestamp(),
       });
 
-      alert("User registered successfully!");
+      console.log("✅ Registered user:", user.email);
       navigate("/login");
     } catch (err) {
-      console.error(err);
-      setError(err.message);
+      console.error("❌ Registration failed:", err.message);
+      setError("Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center text-gray-700">
-          Create Account
-        </h1>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <form
+        onSubmit={handleRegister}
+        className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm"
+      >
+        <h2 className="text-2xl font-semibold text-center mb-6">Register</h2>
 
-        {error && <p className="text-red-600 text-sm mb-3">{error}</p>}
+        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <label className="block mb-3">
+          <span className="text-gray-700">Email</span>
           <input
             type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 block w-full border rounded p-2 focus:outline-none focus:ring focus:border-blue-400"
             required
-            className="w-full p-2 border rounded"
           />
+        </label>
+
+        <label className="block mb-4">
+          <span className="text-gray-700">Password</span>
           <input
             type="password"
-            name="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="mt-1 block w-full border rounded p-2 focus:outline-none focus:ring focus:border-blue-400"
             required
-            className="w-full p-2 border rounded"
           />
-          <select
-            name="role"
-            value={form.role}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          >
-            <option value="editor">Editor</option>
-            <option value="admin">Admin</option>
-          </select>
+        </label>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-          >
-            Register
-          </button>
-        </form>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition"
+        >
+          {loading ? "Registering..." : "Register"}
+        </button>
 
-        <p className="text-sm text-center mt-4 text-gray-600">
+        <p className="text-sm text-center mt-4">
           Already have an account?{" "}
           <a href="/login" className="text-blue-600 hover:underline">
             Log in
           </a>
         </p>
-      </div>
+      </form>
     </div>
   );
 }
