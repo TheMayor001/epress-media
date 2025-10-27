@@ -1,82 +1,71 @@
 // src/components/Navbar.jsx
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase/config";
+import { useAuth } from "@/context/AuthContext";
+import Button from "@/components/ui/Button";
 
-const Navbar = () => {
-  const { user, userRole } = useAuth();
+export default function Navbar() {
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await signOut(auth);
-    localStorage.clear();
+    await logout();
     navigate("/login");
   };
 
   return (
-    <nav className="bg-gray-900 text-white py-4 px-6 flex justify-between items-center">
-      <h1 className="text-xl font-semibold">Epress Media</h1>
+    <nav className="bg-white shadow-sm border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex justify-between items-center">
+        {/* Brand */}
+        <Link
+          to="/"
+          className="text-2xl font-bold text-[#2563EB] tracking-tight"
+        >
+          Epress Media
+        </Link>
 
-      <ul className="flex gap-6 items-center">
-        <li>
-          <Link to="/" className="hover:text-gray-400">
+        {/* Navigation Links */}
+        <div className="flex items-center gap-6">
+          <Link
+            to="/"
+            className="text-gray-700 hover:text-[#2563EB] font-medium transition"
+          >
             Home
           </Link>
-        </li>
 
-        {/* Admin/Editor links */}
-        {user && (userRole === "Admin" || userRole === "Editor") && (
-          <>
-            <li>
-              <Link to="/dashboard" className="hover:text-gray-400">
+          {user ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="text-gray-700 hover:text-[#2563EB] font-medium transition"
+              >
                 Dashboard
               </Link>
-            </li>
-            <li>
-              <Link to="/posts" className="hover:text-gray-400">
-                Posts
-              </Link>
-            </li>
-          </>
-        )}
-
-        {/* Reader role (limited access) */}
-        {user && userRole === "Reader" && (
-          <li className="text-gray-400 italic">(Reader Mode)</li>
-        )}
-
-        {/* Auth buttons */}
-        {user ? (
-          <>
-            <li className="text-sm text-gray-400">({userRole})</li>
-            <li>
-              <button
+              <Button
                 onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded"
+                className="bg-[#2563EB] text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
               >
                 Logout
-              </button>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <Link to="/login" className="hover:text-gray-400">
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="text-gray-700 hover:text-[#2563EB] font-medium transition"
+              >
                 Login
               </Link>
-            </li>
-            <li>
-              <Link to="/register" className="hover:text-gray-400">
+              <Link
+                to="/register"
+                className="text-gray-700 hover:text-[#2563EB] font-medium transition"
+              >
                 Register
               </Link>
-            </li>
-          </>
-        )}
-      </ul>
+            </>
+          )}
+        </div>
+      </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

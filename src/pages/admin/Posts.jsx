@@ -1,66 +1,63 @@
 // src/pages/admin/Posts.jsx
-import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/firebase";
-import { Plus, Edit2, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
+import BrandLayout from "@/components/BrandLayout";
+import Button from "@/components/ui/Button";
+import { PlusCircle, Edit2, Trash2 } from "lucide-react";
 
 export default function Posts() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([
+    { id: 1, title: "Welcome to Epress Media", date: "2025-10-20" },
+    { id: 2, title: "Building with React & Firebase", date: "2025-10-19" },
+  ]);
 
-  // Fetch posts from Firestore
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "posts"));
-        const postsData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setPosts(postsData);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-
-    fetchPosts();
-  }, []);
+  const handleAddPost = () => alert("Add Post Clicked");
+  const handleEdit = (id) => alert(`Edit Post ${id}`);
+  const handleDelete = (id) => alert(`Delete Post ${id}`);
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Manage Posts</h1>
-        <Button variant="default">
-          <Plus className="w-4 h-4 mr-2 inline" />
-          Add New Post
-        </Button>
-      </div>
+    <BrandLayout title="Manage Posts">
+      <div className="space-y-6 max-w-5xl mx-auto">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-semibold text-[#2563EB]">Your Posts</h2>
+          <Button
+            onClick={handleAddPost}
+            className="flex items-center gap-2 bg-[#2563EB] text-white"
+          >
+            <PlusCircle className="w-5 h-5" />
+            New Post
+          </Button>
+        </div>
 
-      {posts.length === 0 ? (
-        <p className="text-gray-500">No posts found.</p>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="bg-white rounded-xl shadow-sm divide-y">
           {posts.map((post) => (
             <div
               key={post.id}
-              className="border rounded-lg shadow-sm p-4 hover:shadow-md transition"
+              className="flex justify-between items-center px-6 py-4 hover:bg-gray-50 transition"
             >
-              <h2 className="font-semibold text-lg mb-2">{post.title}</h2>
-              <p className="text-gray-600 text-sm line-clamp-3">
-                {post.content}
-              </p>
-              <div className="flex justify-end mt-4 gap-2">
-                <Button variant="outline">
-                  <Edit2 className="w-4 h-4" />
-                </Button>
-                <Button variant="outline">
-                  <Trash2 className="w-4 h-4" />
-                </Button>
+              <div>
+                <h3 className="font-semibold text-gray-800">{post.title}</h3>
+                <p className="text-sm text-gray-500">
+                  Published on {post.date}
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => handleEdit(post.id)}
+                  className="text-blue-600 hover:text-blue-800 transition"
+                >
+                  <Edit2 className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => handleDelete(post.id)}
+                  className="text-red-600 hover:text-red-800 transition"
+                >
+                  <Trash2 className="w-5 h-5" />
+                </button>
               </div>
             </div>
           ))}
         </div>
-      )}
-    </div>
+      </div>
+    </BrandLayout>
   );
 }

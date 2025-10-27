@@ -1,94 +1,78 @@
-import { useState } from "react";
-import { auth, db } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+// src/pages/Register.jsx
+import React, { useState } from "react";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "@/firebase";
 import { useNavigate } from "react-router-dom";
+import BrandLayout from "@/components/BrandLayout";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 
 export default function Register() {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
-
     try {
-      // Step 1: Create user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-      const user = userCredential.user;
-
-      // Step 2: Store user role in Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        email: user.email,
-        role: "reader", // default role
-        createdAt: serverTimestamp(),
-      });
-
-      console.log("✅ Registered user:", user.email);
-      navigate("/login");
+      await updateProfile(userCredential.user, { displayName: name });
+      navigate("/dashboard");
     } catch (err) {
-      console.error("❌ Registration failed:", err.message);
-      setError("Registration failed. Please try again.");
-    } finally {
-      setLoading(false);
+      setError("Failed to register. Try again.");
+      console.error(err);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <BrandLayout title="Create an Account">
       <form
-        onSubmit={handleRegister}
-        className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm"
+        onSubmit={handleSubmit}
+        className="space-y-4 w-full max-w-sm mx-auto"
       >
-        <h2 className="text-2xl font-semibold text-center mb-6">Register</h2>
-
-        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
-
-        <label className="block mb-3">
-          <span className="text-gray-700">Email</span>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full border rounded p-2 focus:outline-none focus:ring focus:border-blue-400"
-            required
-          />
-        </label>
-
-        <label className="block mb-4">
-          <span className="text-gray-700">Password</span>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 block w-full border rounded p-2 focus:outline-none focus:ring focus:border-blue-400"
-            required
-          />
-        </label>
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition"
-        >
-          {loading ? "Registering..." : "Register"}
-        </button>
-
-        <p className="text-sm text-center mt-4">
-          Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
-            Log in
-          </a>
-        </p>
+        <Input
+          type="text"
+          label="Full Name"
+          placeholder="Enter your full name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <Input
+          type="email"
+          label="Email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <Input
+          type="password"
+          label="Password"
+          placeholder="Create a password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        {error && <p className="text-red-500 text-sm">{error}</p>}
+        <Button type="submit" className="w-full">
+          Register
+        </Button>
       </form>
-    </div>
+
+      <p className="text-gray-600 mt-6 text-sm">
+        Already have an account?{" "}
+        <a href="/login" className="text-[#2563EB] font-medium hover:underline">
+          Login here
+        </a>
+      </p>
+    </BrandLayout>
   );
 }
