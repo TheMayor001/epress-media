@@ -17,60 +17,39 @@ const Contact = () => (
 const AdminDashboard = () => (
   <h2 className="text-2xl font-semibold text-center mt-10">Admin Dashboard</h2>
 );
-const EditorDashboard = () => (
-  <h2 className="text-2xl font-semibold text-center mt-10">Editor Dashboard</h2>
-);
-const ReaderPage = () => (
-  <h2 className="text-2xl font-semibold text-center mt-10">Reader Page</h2>
-);
 
 function App() {
   const { user } = useAuth();
 
   return (
-    <MainLayout>
-      <Routes>
+    <Routes>
+      {/* Main layout wrapper */}
+      <Route path="/" element={<MainLayout />}>
         {/* Public routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="unauthorized" element={<Unauthorized />} />
 
         {/* Protected routes */}
         <Route
-          path="/admin"
+          path="admin"
           element={
             <ProtectedRoute allowedRoles={["Admin"]}>
               <AdminDashboard />
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/editor"
-          element={
-            <ProtectedRoute allowedRoles={["Admin", "Editor"]}>
-              <EditorDashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/reader"
-          element={
-            <ProtectedRoute allowedRoles={["Admin", "Editor", "Reader"]}>
-              <ReaderPage />
-            </ProtectedRoute>
-          }
-        />
 
-        {/* Default route handling */}
+        {/* Default fallback */}
         <Route
           path="*"
-          element={<Navigate to={user ? "/reader" : "/login"} replace />}
+          element={<Navigate to={user ? "/admin" : "/login"} replace />}
         />
-      </Routes>
-    </MainLayout>
+      </Route>
+    </Routes>
   );
 }
 
