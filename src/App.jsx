@@ -10,7 +10,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import Posts from "./pages/admin/Posts";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
-
+import Footer from "./components/Footer";
 export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-white via-gray-50 to-blue-50 text-gray-800">
