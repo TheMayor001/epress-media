@@ -1,17 +1,29 @@
+// src/pages/Home.jsx
 import React from "react";
+import { Link } from "react-router-dom";
+import BrandLayout from "@/components/BrandLayout";
+import Button from "@/components/ui/Button";
 
-const Home = () => {
+export default function Home() {
   return (
-    <section className="text-center">
-      <h2 className="text-3xl font-bold text-blue-600 mb-4">
-        Welcome to Epress Media
-      </h2>
-      <p className="text-gray-700 max-w-2xl mx-auto">
-        Your trusted platform for creative digital publishing, content
-        management, and media solutions.
+    <BrandLayout title="Welcome to HomeSphere">
+      <p className="text-center text-gray-600 mb-6">
+        Manage your rental properties, tenants, and payments with ease.
+        <br />A smart property management solution by{" "}
+        <span className="text-[#2563EB] font-semibold">
+          Sophon Tech Solutions
+        </span>
+        .
       </p>
-    </section>
-  );
-};
 
-export default Home;
+      <div className="flex flex-col space-y-3">
+        <Link to="/login">
+          <Button>Login</Button>
+        </Link>
+        <Link to="/register">
+          <Button variant="secondary">Create Account</Button>
+        </Link>
+      </div>
+    </BrandLayout>
+  );
+}
