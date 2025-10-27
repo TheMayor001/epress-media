@@ -1,3 +1,4 @@
+//src/layout/MainLayout.jsx
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 
@@ -21,7 +22,7 @@ export default function MainLayout() {
       </header>
 
       {/* Main content area */}
-      <main className="flex-1 p-6">
+      <main className="flex-1 px-6 py-12 bg-gray-50">
         <Outlet /> {/* This renders page content like Home, Login, etc. */}
       </main>
 
