@@ -1,5 +1,4 @@
 // src/context/AuthContext.jsx
-/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { auth, db } from "../firebase/config";
 import { onAuthStateChanged } from "firebase/auth";
@@ -17,7 +16,7 @@ export const AuthProvider = ({ children }) => {
       if (currentUser) {
         setUser(currentUser);
         const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-        setUserRole(userDoc.exists() ? userDoc.data().role : "user");
+        setUserRole(userDoc.exists() ? userDoc.data().role : "Reader");
       } else {
         setUser(null);
         setUserRole(null);
@@ -28,6 +27,10 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    console.log("Current Firebase user:", user);
+  }, [user]);
+
   return (
     <AuthContext.Provider value={{ user, userRole, loading }}>
       {children}
@@ -35,4 +38,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);

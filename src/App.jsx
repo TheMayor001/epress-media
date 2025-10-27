@@ -1,56 +1,49 @@
+// src/App.jsx
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import MainLayout from "./layout/MainLayout";
+import { Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/Navbar";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Dashboard from "./pages/admin/Dashboard";
+import Posts from "./pages/admin/Posts";
 import Unauthorized from "./pages/Unauthorized";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { useAuth } from "./context/AuthContext";
+import NotFound from "./pages/NotFound";
 
-const About = () => (
-  <h2 className="text-2xl font-semibold text-center mt-10">About Us</h2>
-);
-const Contact = () => (
-  <h2 className="text-2xl font-semibold text-center mt-10">Contact Page</h2>
-);
-const AdminDashboard = () => (
-  <h2 className="text-2xl font-semibold text-center mt-10">Admin Dashboard</h2>
-);
-
-function App() {
-  const { user } = useAuth();
-
+export default function App() {
   return (
-    <Routes>
-      {/* Main layout wrapper */}
-      <Route path="/" element={<MainLayout />}>
-        {/* Public routes */}
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="unauthorized" element={<Unauthorized />} />
+    <>
+      <Navbar />
+      <Routes>
+        {/* PUBLIC ROUTES */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
-        {/* Protected routes */}
+        {/* PROTECTED ROUTES */}
         <Route
-          path="admin"
+          path="/dashboard"
           element={
-            <ProtectedRoute allowedRoles={["Admin"]}>
-              <AdminDashboard />
+            <ProtectedRoute allowedRoles={["Admin", "Editor"]}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/posts"
+          element={
+            <ProtectedRoute allowedRoles={["Admin", "Editor"]}>
+              <Posts />
             </ProtectedRoute>
           }
         />
 
-        {/* Default fallback */}
-        <Route
-          path="*"
-          element={<Navigate to={user ? "/admin" : "/login"} replace />}
-        />
-      </Route>
-    </Routes>
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
-
-export default App;

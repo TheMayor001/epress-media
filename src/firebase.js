@@ -1,19 +1,24 @@
-// src/firebase.js
+// src/firebase/config.js
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
+// Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyDQkxYX-GqgFXuo9ZHRuPYoarCKIpqLyP8",
-  authDomain: "e-press-media.firebaseapp.com",
-  projectId: "e-press-media",
-  storageBucket: "e-press-media.firebasestorage.app",
-  messagingSenderId: "238217842617",
-  appId: "1:238217842617:web:870bc8b22715a6f627f068",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// ✅ Initialize only once (important for Vite + HMR)
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+// ✅ Initialize Firebase only once
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
+// Export initialized services
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const storage = getStorage(app);
+export default app;
