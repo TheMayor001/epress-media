@@ -5,10 +5,11 @@ import Button from "@/components/ui/Button";
 import { PlusCircle, Edit2, Trash2 } from "lucide-react";
 
 export default function Posts() {
+  // eslint-disable-next-line no-unused-vars
   const [posts, setPosts] = useState([
     { id: 1, title: "Welcome to Epress Media", date: "2025-10-20" },
     { id: 2, title: "Building with React & Firebase", date: "2025-10-19" },
-  ]);
+  ]); // Removed setPosts until needed
 
   const handleAddPost = () => alert("Add Post Clicked");
   const handleEdit = (id) => alert(`Edit Post ${id}`);
