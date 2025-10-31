@@ -1,74 +1,33 @@
-// src/components/Footer.jsx
+//src
 import React from "react";
-import { Link } from "react-router-dom";
 
-export default function Footer() {
+const Footer = () => {
   return (
-    <footer className="bg-gray-50 border-t border-gray-200 mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-10 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center sm:text-left">
-        {/* Brand & Mission */}
-        <div>
-          <h2 className="text-2xl font-bold text-[#2563EB] mb-2">
-            Epress Media
-          </h2>
-          <p className="text-gray-600 text-sm leading-relaxed">
+    <footer className="bg-white border-t mt-8 text-center text-gray-700 text-sm">
+      <div className="max-w-6xl mx-auto px-4 py-4">
+        <div className="flex flex-col items-center space-y-2">
+          <p className="font-semibold text-blue-600 text-lg">Epress Media</p>
+          <p className="text-gray-600 text-sm">
             Empowering voices through digital media — fast, reliable, and
             community-driven news.
           </p>
         </div>
 
-        {/* Quick Links */}
-        <div>
-          <h3 className="text-gray-900 font-semibold mb-3">Quick Links</h3>
-          <ul className="space-y-2 text-gray-600">
-            <li>
-              <Link to="/" className="hover:text-[#2563EB] transition">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/login" className="hover:text-[#2563EB] transition">
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link to="/register" className="hover:text-[#2563EB] transition">
-                Register
-              </Link>
-            </li>
-          </ul>
+        {/* Links */}
+        <div className="flex justify-center mt-3 space-x-4 text-sm">
+          <a href="/" className="hover:text-blue-600">Home</a>
+          <a href="/login" className="hover:text-blue-600">Login</a>
+          <a href="/register" className="hover:text-blue-600">Register</a>
         </div>
 
-        {/* Contact / Social */}
-        <div>
-          <h3 className="text-gray-900 font-semibold mb-3">Connect</h3>
-          <ul className="space-y-2 text-gray-600">
-            <li>
-              <a
-                href="mailto:info@epressmedia.com"
-                className="hover:text-[#2563EB] transition"
-              >
-                info@epressmedia.com
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#2563EB] transition">
-                Twitter
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#2563EB] transition">
-                Facebook
-              </a>
-            </li>
-          </ul>
+        {/* Copyright */}
+        <div className="border-t mt-3 pt-3 text-gray-500 text-xs">
+          © {new Date().getFullYear()} Epress Media | Powered by{" "}
+          <span className="text-blue-600 font-medium">Sophon Tech Solutions</span>
         </div>
-      </div>
-
-      {/* Bottom Line */}
-      <div className="border-t border-gray-200 text-center py-4 text-gray-500 text-sm">
-        © {new Date().getFullYear()} Epress Media. All rights reserved.
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

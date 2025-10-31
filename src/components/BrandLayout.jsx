@@ -1,22 +1,23 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
-export default function BrandLayout({ title, subtitle, children }) {
+const BrandLayout = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[85vh] px-6 py-20 bg-gray-50 text-center">
-      {/* Title Section */}
-      {title && (
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">{title}</h1>
-      )}
-
-      {/* Subtitle */}
-      {subtitle && (
-        <p className="text-gray-600 text-lg leading-relaxed mb-10 max-w-2xl">
-          {subtitle}
-        </p>
-      )}
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      {/* Navbar */}
+      <Navbar />
 
       {/* Main Content */}
-      <div className="w-full max-w-md space-y-5">{children}</div>
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
-}
+};
+
+export default BrandLayout;

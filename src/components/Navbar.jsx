@@ -1,70 +1,60 @@
 // src/components/Navbar.jsx
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
-import Button from "@/components/ui/Button";
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
-  const handleLogout = async () => {
-    await logout();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex justify-between items-center">
-        {/* Brand */}
+    <nav className="flex items-center justify-between px-8 py-4 bg-white border-b shadow-sm">
+      {/* Brand */}
+      <Link
+        to="/"
+        className="text-xl font-semibold text-[#2563EB] hover:opacity-90"
+      >
+        Epress Media
+      </Link>
+
+      {/* Navigation Links */}
+      <div className="flex items-center gap-6 text-gray-700 font-medium">
         <Link
           to="/"
-          className="text-2xl font-bold text-[#2563EB] tracking-tight"
+          className="hover:text-[#2563EB] transition-colors duration-200"
         >
-          Epress Media
+          Home
         </Link>
 
-        {/* Navigation Links */}
-        <div className="flex items-center gap-6">
+        {!token && (
           <Link
-            to="/"
-            className="text-gray-700 hover:text-[#2563EB] font-medium transition"
+            to="/login"
+            className="hover:text-[#2563EB] transition-colors duration-200"
           >
-            Home
+            Login
           </Link>
+        )}
 
-          {user ? (
-            <>
-              <Link
-                to="/dashboard"
-                className="text-gray-700 hover:text-[#2563EB] font-medium transition"
-              >
-                Dashboard
-              </Link>
-              <Button
-                onClick={handleLogout}
-                className="bg-[#2563EB] text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-              >
-                Logout
-              </Button>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="text-gray-700 hover:text-[#2563EB] font-medium transition"
-              >
-                Login
-              </Link>
-              <Link
-                to="/register"
-                className="text-gray-700 hover:text-[#2563EB] font-medium transition"
-              >
-                Register
-              </Link>
-            </>
-          )}
-        </div>
+        {token && (
+          <>
+            <Link
+              to="/dashboard"
+              className="hover:text-[#2563EB] transition-colors duration-200"
+            >
+              Dashboard
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="text-[#2563EB] border border-[#2563EB] px-3 py-1 rounded-md hover:bg-[#2563EB] hover:text-white transition"
+            >
+              Logout
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );
