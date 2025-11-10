@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
 import { useNavigate, Link } from "react-router-dom";
-import BrandLayout from "@/components/BrandLayout";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 
@@ -26,8 +25,12 @@ export default function Login() {
   };
 
   return (
-    <BrandLayout title="Login to Your Account">
-      <div className="w-full max-w-sm mx-auto bg-white p-6 rounded-lg shadow-sm">
+    <section className="flex flex-col items-center justify-center min-h-[80vh] px-4 bg-gray-50">
+      <div className="w-full max-w-md bg-white shadow-sm rounded-2xl p-8 border border-gray-100">
+        <h1 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+          Login to Your Account
+        </h1>
+
         <form onSubmit={handleSubmit} className="space-y-5">
           <Input
             type="email"
@@ -54,7 +57,7 @@ export default function Login() {
 
           <Button
             type="submit"
-            className="w-full bg-[#2563EB] hover:bg-blue-700 text-white"
+            className="w-full bg-[#2563EB] hover:bg-blue-700 text-white transition-all duration-150"
           >
             Login
           </Button>
@@ -66,10 +69,10 @@ export default function Login() {
             to="/register"
             className="text-[#2563EB] font-medium hover:underline"
           >
-            Register here
+            Create one
           </Link>
         </p>
       </div>
-    </BrandLayout>
+    </section>
   );
 }

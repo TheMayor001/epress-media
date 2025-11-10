@@ -1,7 +1,8 @@
+// src/components/BrandLayout.jsx
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const BrandLayout = () => {
   return (
@@ -10,7 +11,7 @@ const BrandLayout = () => {
       <Navbar />
 
       {/* Main Content */}
-      <main className="flex-grow">
+      <main className="flex-grow px-4 py-8">
         <Outlet />
       </main>
 
