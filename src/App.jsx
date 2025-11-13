@@ -1,8 +1,8 @@
 // src/App.jsx
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import MainLayout from "./layout/MainLayout";
-import BrandLayout from "./components/BrandLayout";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -11,44 +11,51 @@ import Posts from "./pages/admin/Posts";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 export default function App() {
   return (
-    <Routes>
-      {/* Public-facing layout (MainLayout) */}
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<div>About Page</div>} />
-        <Route path="/contact" element={<div>Contact Page</div>} />
-      </Route>
+    <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
+      {/* Single global navbar */}
+      <Navbar />
 
-      {/* Auth layout (BrandLayout) */}
-      <Route element={<BrandLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
-      </Route>
+      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <Routes>
+          {/* PUBLIC */}
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
 
-      {/* Protected admin routes */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute allowedRoles={["Admin", "Editor"]}>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/posts"
-        element={
-          <ProtectedRoute allowedRoles={["Admin", "Editor"]}>
-            <Posts />
-          </ProtectedRoute>
-        }
-      />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
 
-      {/* 404 */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+          {/* PROTECTED */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["Admin", "Editor"]}>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/posts"
+            element={
+              <ProtectedRoute allowedRoles={["Admin", "Editor"]}>
+                <Posts />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+
+      {/* Single global footer */}
+      <Footer />
+    </div>
   );
 }

@@ -47,59 +47,60 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 flex flex-col">
       {/* Hero Section */}
-      <section className="text-center py-16 bg-white border-b">
+      <section className="text-center py-16 bg-gradient-to-b from-white to-gray-50 border-b">
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-5xl font-bold text-[#2563EB] mb-4">
             Epress Media
           </h1>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
             Empowering voices through digital media — fast, reliable, and
             community-driven news.
           </p>
           <img
             src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1200&q=80"
             alt="Office workspace"
-            className="w-full h-[380px] object-cover rounded-xl mt-8 shadow-sm"
+            className="w-full h-[280px] md:h-[320px] object-cover rounded-xl mt-8 shadow"
           />
         </div>
       </section>
 
       {/* Articles Section */}
-      <section className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8 flex-grow">
-        {sampleArticles.map((article) => (
-          <div
-            key={article.id}
-            onClick={() => navigate(`/article/${article.id}`)}
-            className="bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer overflow-hidden flex flex-col"
-          >
-            <img
-              src={article.image}
-              alt={article.title}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-5 flex flex-col flex-grow">
-              <span className="text-sm font-semibold text-[#2563EB] uppercase">
-                {article.category}
-              </span>
-              <h2 className="text-lg font-semibold mt-2 mb-2 hover:underline">
-                {article.title}
-              </h2>
-              <p className="text-gray-600 flex-grow">{article.excerpt}</p>
-              <button className="mt-4 text-[#2563EB] font-semibold hover:underline self-start">
-                Read More →
-              </button>
+      <section className="max-w-6xl mx-auto px-6 py-12 flex-grow">
+        <h2 className="text-2xl font-semibold text-center mb-8 text-gray-800">
+          Latest Highlights
+        </h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sampleArticles.map((article) => (
+            <div
+              key={article.id}
+              onClick={() => navigate(`/article/${article.id}`)}
+              className="bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-transform duration-200 cursor-pointer overflow-hidden flex flex-col"
+            >
+              <img
+                src={article.image}
+                alt={article.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-5 flex flex-col flex-grow">
+                <span className="text-sm font-semibold text-[#2563EB] uppercase tracking-wide">
+                  {article.category}
+                </span>
+                <h2 className="text-lg font-semibold mt-2 mb-2 hover:underline">
+                  {article.title}
+                </h2>
+                <p className="text-gray-600 flex-grow leading-relaxed text-sm">
+                  {article.excerpt}
+                </p>
+                <button className="mt-4 text-[#2563EB] font-medium hover:text-blue-700 transition self-start">
+                  Read More →
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
 
-      {/* Compact Footer */}
-      <footer className="text-center py-4 border-t text-gray-500 text-sm bg-white">
-        © {new Date().getFullYear()} Epress Media | Powered by{" "}
-        <span className="text-[#2563EB] font-medium">
-          Sophon Tech Solutions
-        </span>
-      </footer>
+
     </div>
   );
 }
