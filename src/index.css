@@ -1,3 +1,6 @@
+/* ======================= */
+/* Global Article Image Style */
+/* ======================= */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -117,3 +120,33 @@ p {
     background-color: var(--color-bg);
   }
 }
+
+.article-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  display: block;
+}
+
+/* Larger screens */
+@media (min-width: 768px) {
+  .article-image {
+    height: 230px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .article-image {
+    height: 200px;
+  }
+}
+
+/* Optional small variant */
+.article-image--small {
+  height: 120px;
+  border-radius: 8px;
+}
+
+
