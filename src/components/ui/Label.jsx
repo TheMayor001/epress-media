@@ -1,0 +1,12 @@
+import React from "react";
+
+export default function Label({ children, className = "", ...props }) {
+  return (
+    <label
+      className={"block mb-1 text-sm font-medium text-gray-700 " + className}
+      {...props}
+    >
+      {children}
+    </label>
+  );
+}
