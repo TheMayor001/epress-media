@@ -11,6 +11,8 @@ const sampleArticles = [
       "Analysts project a 30% surge in funding as Kenya continues to attract global tech investors...",
     image:
       "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=800&q=80",
+    author: "Epress Staff",
+    date: "Jan 14, 2025",
   },
   {
     id: 2,
@@ -20,6 +22,8 @@ const sampleArticles = [
       "From art to digital media, young creatives in Mombasa are shaping Kenya’s next cultural wave...",
     image:
       "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80",
+    author: "Epress Staff",
+    date: "Jan 11, 2025",
   },
   {
     id: 3,
@@ -29,6 +33,8 @@ const sampleArticles = [
       "A new era of independent reporting is changing how stories are told and trusted online...",
     image:
       "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
+    author: "Epress Staff",
+    date: "Jan 9, 2025",
   },
   {
     id: 4,
@@ -38,6 +44,8 @@ const sampleArticles = [
       "Artificial Intelligence is revolutionizing how news is researched, written, and distributed...",
     image:
       "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
+    author: "Epress Staff",
+    date: "Jan 7, 2025",
   },
 ];
 
@@ -58,11 +66,11 @@ export default function Home() {
             community-driven news.
           </p>
 
-          {/* Hero image — NOT affected by global article image styles */}
+          {/* Hero Image */}
           <img
             src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1200&q=80"
             alt="Office workspace"
-            className="w-full h-[280px] md:h-[320px] object-cover rounded-xl mt-8 shadow"
+            className="hero-image mt-8 shadow"
           />
         </div>
       </section>
@@ -77,16 +85,14 @@ export default function Home() {
           {sampleArticles.map((article) => (
             <div
               key={article.id}
+              className="article-card bg-white rounded-xl shadow cursor-pointer overflow-hidden flex flex-col"
               onClick={() => navigate(`/article/${article.id}`)}
-              className="bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-transform duration-200 cursor-pointer overflow-hidden flex flex-col"
             >
-              {/* Article image — uses our new global class */}
               <img
                 src={article.image}
                 alt={article.title}
                 className="article-image"
                 loading="lazy"
-                decoding="async"
               />
 
               <div className="p-5 flex flex-col flex-grow">
@@ -94,7 +100,7 @@ export default function Home() {
                   {article.category}
                 </span>
 
-                <h2 className="text-lg font-semibold mt-2 mb-2 hover:underline">
+                <h2 className="text-xl font-bold mt-2 mb-2 leading-snug">
                   {article.title}
                 </h2>
 
@@ -102,7 +108,12 @@ export default function Home() {
                   {article.excerpt}
                 </p>
 
-                <button className="mt-4 text-[#2563EB] font-medium hover:text-blue-700 transition self-start">
+                {/* Author + date */}
+                <div className="text-xs text-gray-500 mt-4">
+                  {article.author} • {article.date}
+                </div>
+
+                <button className="mt-3 text-[#2563EB] font-medium hover:text-blue-700 transition self-start">
                   Read More →
                 </button>
               </div>

@@ -1,11 +1,13 @@
 /* ======================= */
-/* Global Article Image Style */
+/* Tailwind Base Layer */
 /* ======================= */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ========== Custom Animations ========== */
+/* ======================= */
+/* Custom Animations */
+/* ======================= */
 @layer utilities {
   @keyframes fadeIn {
     from {
@@ -35,11 +37,14 @@
   }
 }
 
-/* ========== Global Theme ========== */
+/* ======================= */
+/* Global Theme */
+/* ======================= */
 :root {
   --color-primary: #2563eb;
   --color-bg: #f8fafc;
   --color-text: #1e293b;
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;
   font-weight: 400;
@@ -54,7 +59,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ========== Element Styles ========== */
+/* ======================= */
+/* Element Defaults */
+/* ======================= */
 body {
   margin: 0;
   min-width: 320px;
@@ -69,8 +76,9 @@ a {
   text-decoration: none;
   transition: color 0.2s ease;
 }
+
 a:hover {
-  color: #1d4ed8; /* slightly darker blue */
+  color: #1d4ed8;
 }
 
 button {
@@ -86,17 +94,21 @@ button {
   transition: all 0.25s ease;
   box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
 }
+
 button:hover {
   background-color: #1d4ed8;
   box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
 }
+
 button:focus,
 button:focus-visible {
   outline: 3px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* ========== Typography ========== */
+/* ======================= */
+/* Typography */
+/* ======================= */
 h1,
 h2,
 h3,
@@ -113,7 +125,9 @@ p {
   color: #334155;
 }
 
-/* ========== Light Mode Defaults ========== */
+/* ======================= */
+/* Light Mode Override */
+/* ======================= */
 @media (prefers-color-scheme: light) {
   :root {
     color: var(--color-text);
@@ -121,6 +135,9 @@ p {
   }
 }
 
+/* ======================= */
+/* Article Image Styles */
+/* ======================= */
 .article-image {
   width: 100%;
   height: 200px;
@@ -130,7 +147,6 @@ p {
   display: block;
 }
 
-/* Larger screens */
 @media (min-width: 768px) {
   .article-image {
     height: 230px;
@@ -143,10 +159,42 @@ p {
   }
 }
 
-/* Optional small variant */
 .article-image--small {
   height: 120px;
   border-radius: 8px;
 }
 
+/* ======================= */
+/* Hero Image Styles */
+/* ======================= */
+.hero-image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 14px;
+  object-position: center;
+}
 
+@media (min-width: 768px) {
+  .hero-image {
+    height: 380px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-image {
+    height: 420px;
+  }
+}
+
+/* ======================= */
+/* Article Card Hover */
+/* ======================= */
+.article-card {
+  transition: all 0.25s ease;
+}
+
+.article-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
+}

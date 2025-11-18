@@ -1,91 +1,93 @@
 // src/pages/Register.jsx
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "@/firebase";
-import { useNavigate, Link } from "react-router-dom";
-import BrandLayout from "@/components/BrandLayout";
-import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirm: "",
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      await updateProfile(userCredential.user, { displayName: name });
-      navigate("/dashboard");
-    } catch (err) {
-      console.error(err);
-      setError("Failed to register. Try again.");
-    }
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   return (
-    <BrandLayout title="Create an Account">
-      <div className="w-full max-w-sm mx-auto bg-white p-6 rounded-lg shadow-sm">
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <Input
-            type="text"
-            label="Full Name"
-            placeholder="Enter your full name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="bg-white/90 backdrop-blur-md shadow-lg rounded-xl p-8 w-full max-w-md animate-fadeIn border border-gray-200">
+        <h1 className="text-3xl font-bold text-center text-[#2563EB] mb-6">
+          Create Account
+        </h1>
 
-          <Input
-            type="email"
-            label="Email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+        {/* Name */}
+        <label className="block text-sm font-medium mb-1 text-gray-700">
+          Full Name
+        </label>
+        <input
+          type="text"
+          name="name"
+          placeholder="John Mwangi"
+          value={form.name}
+          onChange={handleChange}
+          className="w-full mb-4 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:outline-none"
+        />
 
-          <Input
-            type="password"
-            label="Password"
-            placeholder="Create a password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        {/* Email */}
+        <label className="block text-sm font-medium mb-1 text-gray-700">
+          Email Address
+        </label>
+        <input
+          type="email"
+          name="email"
+          placeholder="you@example.com"
+          value={form.email}
+          onChange={handleChange}
+          className="w-full mb-4 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:outline-none"
+        />
 
-          {error && (
-            <p className="text-red-500 text-sm font-medium text-center">
-              {error}
-            </p>
-          )}
+        {/* Password */}
+        <label className="block text-sm font-medium mb-1 text-gray-700">
+          Password
+        </label>
+        <input
+          type="password"
+          name="password"
+          placeholder="••••••••"
+          value={form.password}
+          onChange={handleChange}
+          className="w-full mb-4 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:outline-none"
+        />
 
-          <Button
-            type="submit"
-            className="w-full bg-[#2563EB] hover:bg-blue-700 text-white"
+        {/* Confirm Password */}
+        <label className="block text-sm font-medium mb-1 text-gray-700">
+          Confirm Password
+        </label>
+        <input
+          type="password"
+          name="confirm"
+          placeholder="••••••••"
+          value={form.confirm}
+          onChange={handleChange}
+          className="w-full mb-6 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:outline-none"
+        />
+
+        <button className="w-full bg-[#2563EB] text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+          Create Account
+        </button>
+
+        <p className="text-center text-sm text-gray-600 mt-4">
+          Already registered?{" "}
+          <span
+            onClick={() => navigate("/login")}
+            className="text-[#2563EB] font-semibold hover:underline cursor-pointer"
           >
-            Register
-          </Button>
-        </form>
-
-        <p className="text-gray-600 mt-6 text-sm text-center">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-[#2563EB] font-medium hover:underline"
-          >
-            Login here
-          </Link>
+            Login
+          </span>
         </p>
       </div>
-    </BrandLayout>
+    </div>
   );
 }
