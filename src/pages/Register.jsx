@@ -1,6 +1,7 @@
 // src/pages/Register.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../components/ui/Button";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -17,8 +18,8 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white/90 backdrop-blur-md shadow-lg rounded-xl p-8 w-full max-w-md animate-fadeIn border border-gray-200">
-        <h1 className="text-3xl font-bold text-center text-[#2563EB] mb-6">
+      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md animate-fadeIn border border-gray-200">
+        <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
           Create Account
         </h1>
 
@@ -32,7 +33,8 @@ export default function Register() {
           placeholder="John Mwangi"
           value={form.name}
           onChange={handleChange}
-          className="w-full mb-4 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:outline-none"
+          className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg 
+          focus:ring-2 focus:ring-blue-500 focus:outline-none"
         />
 
         {/* Email */}
@@ -45,7 +47,8 @@ export default function Register() {
           placeholder="you@example.com"
           value={form.email}
           onChange={handleChange}
-          className="w-full mb-4 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:outline-none"
+          className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg 
+          focus:ring-2 focus:ring-blue-500 focus:outline-none"
         />
 
         {/* Password */}
@@ -58,7 +61,8 @@ export default function Register() {
           placeholder="••••••••"
           value={form.password}
           onChange={handleChange}
-          className="w-full mb-4 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:outline-none"
+          className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg 
+          focus:ring-2 focus:ring-blue-500 focus:outline-none"
         />
 
         {/* Confirm Password */}
@@ -71,18 +75,17 @@ export default function Register() {
           placeholder="••••••••"
           value={form.confirm}
           onChange={handleChange}
-          className="w-full mb-6 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:outline-none"
+          className="w-full mb-6 px-4 py-3 border border-gray-300 rounded-lg 
+          focus:ring-2 focus:ring-blue-500 focus:outline-none"
         />
 
-        <button className="w-full bg-[#2563EB] text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
-          Create Account
-        </button>
+        <Button type="submit">Create Account</Button>
 
         <p className="text-center text-sm text-gray-600 mt-4">
           Already registered?{" "}
           <span
             onClick={() => navigate("/login")}
-            className="text-[#2563EB] font-semibold hover:underline cursor-pointer"
+            className="text-blue-600 font-semibold hover:underline cursor-pointer"
           >
             Login
           </span>

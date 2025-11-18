@@ -1,6 +1,7 @@
 // src/pages/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../components/ui/Button";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,8 +13,8 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white/90 backdrop-blur-md shadow-lg rounded-xl p-8 w-full max-w-md animate-fadeIn border border-gray-200">
-        <h1 className="text-3xl font-bold text-center text-[#2563EB] mb-6">
+      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md animate-fadeIn border border-gray-200">
+        <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
           Welcome Back
         </h1>
 
@@ -27,7 +28,8 @@ export default function Login() {
           placeholder="you@example.com"
           value={form.email}
           onChange={handleChange}
-          className="w-full mb-4 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:outline-none"
+          className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg 
+          focus:ring-2 focus:ring-blue-500 focus:outline-none"
         />
 
         {/* Password */}
@@ -40,18 +42,17 @@ export default function Login() {
           placeholder="••••••••"
           value={form.password}
           onChange={handleChange}
-          className="w-full mb-6 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:outline-none"
+          className="w-full mb-6 px-4 py-3 border border-gray-300 rounded-lg 
+          focus:ring-2 focus:ring-blue-500 focus:outline-none"
         />
 
-        <button className="w-full bg-[#2563EB] text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
-          Login
-        </button>
+        <Button type="submit">Login</Button>
 
         <p className="text-center text-sm text-gray-600 mt-4">
           Don't have an account?{" "}
           <span
             onClick={() => navigate("/register")}
-            className="text-[#2563EB] font-semibold hover:underline cursor-pointer"
+            className="text-blue-600 font-semibold hover:underline cursor-pointer"
           >
             Register
           </span>
