@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary-blue: #0056b3;
+  --secondary-sky: #00aeef;
+  --body-charcoal: #1a1a1a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary-blue);
+  --color-secondary: var(--secondary-sky);
+  --color-body: var(--body-charcoal);
+  --font-sans:
+    var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-serif:
+    "Georgia", "Merriweather", "Noto Serif", "Times New Roman", serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --body-charcoal: #e0e0e0; /* Lighter for dark mode */
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--body-charcoal);
+  font-family: var(--font-sans);
+}
+
+@keyframes infinite-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-infinite-scroll {
+  white-space: nowrap;
+  animation: infinite-scroll 30s linear infinite;
+}
